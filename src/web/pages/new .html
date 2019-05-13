@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Option From Array</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=2.0">
+</head>
+<body id="body">
+
+<select id="select">
+    <option value="default">default</option>
+</select>
+<!--<script id="myscript" type="text/javascript" src="url_to_json">-->
+<script id="myscript" type="text/javascript">
+    var jsObj = returnJsObjFromSource();
+
+    // timetemp
+    jsObj = {
+        "parameterDefinitions": [
+            {
+                "id": 1,
+                "parent": {
+                    "id": -1
+                },
+                "displayOrder": 1,
+                "name": "name 1",
+                "type": "static-list",
+                "possibleValues": [
+                    {
+                        "id": 1,
+                        "name": "value 1"
+                    }
+                ],
+                "defaultValue": "1",
+                "help": "help info",
+                "workflow": true,
+                "job": false,
+                "tab": "Standard"
+            },
+            {
+                "id": 2,
+                "parent": {
+                    "id": -1
+                },
+                "displayOrder": 1,
+                "name": "name 2",
+                "type": "static-list",
+                "possibleValues": [
+                    {
+                        "id": 1,
+                        "name": "value 1"
+                    },
+                    {
+                        "id": 2,
+                        "name": "value 2"
+                    },
+                    {
+                        "id": 3,
+                        "name": "value 3"
+                    },
+                    {
+                        "id": 4,
+                        "name": "value 4"
+                    },
+                    {
+                        "id": 5,
+                        "name": "value 5"
+                    },
+                    {
+                        "id": 6,
+                        "name": "value 6"
+                    }
+                ],
+                "defaultValue": "1",
+                "help": "help info",
+                "workflow": false,
+                "job": true,
+                "tab": "Standard"
+            },
+            {
+                "id": 3,
+                "parent": {
+                    "id": 2,
+                    "condition": [
+                        1,
+                        2,
+                        3
+                    ]
+                },
+                "displayOrder": 1,
+                "name": "name 3",
+                "type": "static-list", //dynamic-list
+                "possibleValues": [
+                    {
+                        "id": 1,
+                        "name": "value 1"
+                    },
+                    {
+                        "id": 2,
+                        "name": "value 2"
+                    }
+                ],
+                "defaultValue": "1",
+                "help": "help info",
+                "workflow": false,
+                "job": true
+            }
+        ]
+    };
+    let body = document.getElementById("body");
+    let mainAr = jsObj.parameterDefinitions.sort();
+
+    // ToDo: 13.05.2019y. Add csses
+
+    for (let j = 0; j < mainAr.length; j++) {
+        let arElt = mainAr[j];
+        let parentConditions = arElt.parent.id;
+
+        if (parentConditions < 0) {
+
+            // generate UI elements
+            const __ret = getUiElements();
+            let divInLoop = __ret.divInLoop, selectInLoop = __ret.selectInLoop, optionInLoop = __ret.optionInLoop;
+            let jsTextInLoop = document.createTextNode(arElt.name);
+
+            selectInLoop.setAttribute("id", "select${j}");
+
+            childHooding(divInLoop, selectInLoop, optionInLoop, jsTextInLoop);
+
+            // get all fields out of parameterDefinitions array elements
+            let idInLoop = document.createTextNode(arElt.id);//": 1,
+            let displayOrderInLoop = document.createTextNode(arElt.displayOrder); //":
+            let nameInLoop = document.createTextNode(arElt.name);//": "name 1 "
+            let typeInLoop = document.createTextNode(arElt.type);//": "static-
+            let possibleValuesInLoop = arElt.possibleValues;//"        " +;
+            let defaultValueInLoop = document.createTextNode(arElt.defaultValue);//": "1",
+            let helpInLoop = document.createTextNode(arElt.helpInLoop);//": "help info",
+            let workflowInLoop = document.createTextNode(arElt.workflowInLoop);//": true,
+            let jobInLoop = document.createTextNode(arElt.jobInLoop);//": false,
+            let tabInLoop = document.createTextNode(arElt.tabInLoop);//": "Standard"
+
+        } else {
+            // id 3 должен появляться только в случае если в id 2 выбраны значения 1, 2 или 3.
+
+        }
+    }
+
+    function childHooding(divInLoop, selectInLoop, optionInLoop, jsTextInLoop) {
+        body.appendChild(divInLoop);
+        divInLoop.appendChild(selectInLoop);
+        optionInLoop.appendChild(jsTextInLoop);
+        selectInLoop.appendChild(optionInLoop);
+    }
+
+    function returnJsObjFromSource() {
+        //    some impl
+        //     var test = $.getJSON('test.json');
+        //     var jsontest = JSON.parse(test);
+        //    return jsontest ;
+    }
+
+    function getUiElements() {
+        let divInLoop = document.createElement("div");
+        let selectInLoop = document.createElement("SELECT");
+        let optionInLoop = document.createElement("OPTION");
+        return {divInLoop: divInLoop, selectInLoop: selectInLoop, optionInLoop: optionInLoop};
+    }
+</script>
+
+</body>
+</html>
